@@ -89,5 +89,4 @@ AlertWave provides a **fast, location-based alert system** that:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/alertwave.git
-cd alertwave
+git clone https://github.com/retkatmun/alert-wave.git
