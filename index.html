@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AlertWave</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-950 text-white">
+
+<!-- NAVBAR -->
+<nav class="bg-gray-900 px-6 py-4 flex justify-between items-center fixed w-full z-50">
+  <h1 class="text-xl font-bold text-red-500">🚨 AlertWave</h1>
+
+  <div class="hidden md:flex gap-6">
+    <a href="#home" class="nav-link">Home</a>
+    <a href="#features" class="nav-link">Features</a>
+    <a href="#contact" class="nav-link">Contact</a>
+  </div>
+
+  <button id="menuBtn" class="md:hidden text-2xl">☰</button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mobileMenu" class="hidden bg-gray-900 p-6 space-y-4 fixed w-full top-16 z-40">
+  <a href="#home" class="nav-link block">Home</a>
+  <a href="#features" class="nav-link block">Features</a>
+  <a href="#contact" class="nav-link block">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="home" class="pt-28 text-center py-20 px-6">
+  <h2 class="text-4xl font-bold mb-4">
+    Stay Safe with <span class="text-red-500">AlertWave</span>
+  </h2>
+
+  <p class="text-gray-400 max-w-xl mx-auto mb-6">
+    Instantly alert your community and emergency responders in one click.
+  </p>
+
+  <button onclick="openOptions()" 
+    class="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-xl text-lg">
+    🚨 Send Alert
+  </button>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="px-6 py-16 text-center">
+  <h3 class="text-3xl font-bold mb-8">Features</h3>
+
+  <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+    <div class="bg-gray-900 p-6 rounded-xl">⚡ Real-time Alerts</div>
+    <div class="bg-gray-900 p-6 rounded-xl">📍 Location-based</div>
+    <div class="bg-gray-900 p-6 rounded-xl">🔊 Loud Emergency Sound</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="px-6 py-16 text-center">
+  <h3 class="text-3xl font-bold mb-6">Contact</h3>
+  <p class="text-gray-400">alertwave@email.com</p>
+</section>
+
+<!-- ALERT OPTIONS MODAL -->
+<div id="optionsModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center">
+  <div class="bg-gray-900 p-6 rounded-xl w-80 text-center">
+
+    <h2 class="text-xl mb-4 text-red-500">Select Emergency</h2>
+
+    <div class="space-y-3">
+      <button onclick="triggerAlert('Theft / Robbery')" class="btn">🚔 Theft</button>
+      <button onclick="triggerAlert('Fire Outbreak')" class="btn">🔥 Fire</button>
+      <button onclick="triggerAlert('Medical Emergency')" class="btn">🏥 Medical</button>
+      <button onclick="triggerAlert('Crisis Situation')" class="btn">⚠️ Crisis</button>
+      <button onclick="triggerAlert('Suspicious Activity')" class="btn">👁 Suspicious</button>
+    </div>
+
+    <button onclick="closeOptions()" class="mt-4 text-gray-400">Cancel</button>
+  </div>
+</div>
+
+<!-- ALERT CONFIRMATION -->
+<div id="alertModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center">
+  <div class="bg-gray-900 p-6 rounded-xl text-center">
+    <h2 class="text-red-500 text-xl mb-3">🚨 ALERT SENT</h2>
+    <p id="alertText"></p>
+    <button onclick="closeAlert()" class="mt-4 bg-gray-700 px-4 py-2 rounded">Close</button>
+  </div>
+</div>
+
+<!-- AUDIO -->
+<audio id="sound">
+  <source src="https://www.soundjay.com/buttons/beep-01a.mp3">
+</audio>
+
+<script>
+
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+// TOGGLE MENU
+menuBtn.onclick = () => {
+  mobileMenu.classList.toggle("hidden");
+};
+
+// CLOSE MENU WHEN LINK CLICKED
+document.querySelectorAll(".nav-link").forEach(link => {
+  link.addEventListener("click", () => {
+    mobileMenu.classList.add("hidden");
+  });
+});
+
+// CLOSE MENU WHEN CLICK OUTSIDE
+document.addEventListener("click", (e) => {
+  if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+    mobileMenu.classList.add("hidden");
+  }
+});
+
+// ALERT OPTIONS
+const optionsModal = document.getElementById("optionsModal");
+
+function openOptions() {
+  optionsModal.classList.remove("hidden");
+}
+
+function closeOptions() {
+  optionsModal.classList.add("hidden");
+}
+
+// ALERT TRIGGER
+const alertModal = document.getElementById("alertModal");
+const alertText = document.getElementById("alertText");
+const sound = document.getElementById("sound");
+
+function triggerAlert(type) {
+  closeOptions();
+  alertModal.classList.remove("hidden");
+
+  alertText.innerText = type + " alert sent to responders!";
+  sound.play();
+}
+
+function closeAlert() {
+  alertModal.classList.add("hidden");
+  sound.pause();
+  sound.currentTime = 0;
+}
+
+</script>
+
+<style>
+.btn {
+  display: block;
+  width: 100%;
+  background: #111827;
+  padding: 10px;
+  border-radius: 8px;
+}
+.btn:hover {
+  background: #dc2626;
+}
+</style>
+
+</body>
+</html>
